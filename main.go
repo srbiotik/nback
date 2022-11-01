@@ -8,8 +8,7 @@ import (
 )
 
 func Generate(declaration models.ModelDeclaration) []int {
-	amount_of_stims := declaration.Level + declaration.Level*declaration.Rounds
-	ammount_of_hits := int(float64(amount_of_stims)*declaration.Reccurence) - int(float64(amount_of_stims)*declaration.Reccurence)%2
+	amount_of_stims, ammount_of_hits := amount_of_stims_and_hits(declaration)
 
 	hits := make([]int, ammount_of_hits)
 	rand.NewSource(time.Now().UnixNano())
@@ -27,4 +26,10 @@ func Generate(declaration models.ModelDeclaration) []int {
 	}
 
 	return collection
+}
+
+func amount_of_stims_and_hits(d models.ModelDeclaration) (int, int) {
+	amount_of_stims := d.Level + d.Level*d.Rounds
+	ammount_of_hits := int(float64(amount_of_stims)*d.Reccurence) - int(float64(amount_of_stims)*d.Reccurence)%2
+	return amount_of_stims, ammount_of_hits
 }
